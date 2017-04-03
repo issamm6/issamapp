@@ -1,36 +1,50 @@
 var express = require('express');
- var router = express.Router();
- 
- var tasques = [
- 	{
- 		"nom":"Diseño wireframe",
- 		"etiquetes": [ "wireframe","app","hibrida"],
- 		"realització":25
- 	},
- 	{
- 		"nom":"Reunión",
- 		"etiquetes": ["app","hibrida"],
- 		"realització":"50"
-	},
- 	{
- 		"nom":"Desarrollo Layout",
- 		"etiquetes": [ "layout","app","hibrida"],
- 		"realització":"75"
- 	},
- 	{
- 		"nom":"Reunión cliente",
- 		"etiquetes": [ "reunión","app","hibrida"],
- 		"realització":"100"
- 	}
- ]
- 
- 
- router.get('/', function(req, res, next) {
-   res.render('tareas', {title: 'Tareas', tareas:tasques});
- });
- 
- router.get('/nueva', function(req, res, next) {
-   res.render('tareaNueva', {title: 'Tarea Nueva'});
- });
- 
- module.exports = router;
+var router = express.Router();
+
+/* GET home page. */
+var tareas = [
+  {
+    "nom":"Diseño wireframe",
+    "etiquetes": [ "wireframe","app","hibrida"],
+    "realització":"36"
+  },
+  {
+    "nom":"Reunión",
+    "etiquetes": ["app","hibrida"],
+    "realització":"36"
+  },
+  {
+    "nom":"Desarrollo Layout",
+    "etiquetes": [ "layout","app","hibrida"],
+    "realització":"36"
+  },
+  {
+    "nom":"Reunión cliente",
+    "etiquetes": [ "reunión","app","hibrida"],
+    "realització":"36"
+  }
+]
+router.get('/', function(req, res, next) {
+  res.render('tareas', { title: 'issamApp', tareas: tareas });
+});
+
+router.get('/new', function(req, res, next) {
+  res.render('new', { title: 'issamApp'});
+});
+
+router.post('/crear' ,function(req, res, next) {
+  var nom = req.body.nombre;
+  var etiquitas = req.body.etiquetas;
+  var realizacion = req.body.realizacion;
+
+  etiquetas = etiquetas.split(",");
+  var add = {
+     "nom": nom,
+     "etiquetes": etiquetas,
+     "realització": realizacion
+  }
+  tareas.push(add);
+  res.redirect('/tareas');
+});
+
+module.exports = router;
